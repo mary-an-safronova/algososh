@@ -6,7 +6,7 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
-import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { DELAY_IN_MS } from "../../constants/delays";
 import { getReversingStringSteps, updateElementsWithInterval } from "../../utils/utils";
 import { CircleElement } from "../../types/element-states";
 import { useEffect } from "react";
@@ -39,14 +39,13 @@ export const StringComponent: React.FC = () => {
     let currentStep = 0;
     while (currentStep < steps.length) {
       if (steps) {
-        await updateElementsWithInterval(setLetters, [...letters], SHORT_DELAY_IN_MS, isComponentMounted);
         let leftIndex = currentStep;
         let rightIndex = letters.length - currentStep - 1;
         
         letters[leftIndex].state = ElementStates.Changing;
         letters[rightIndex].state = ElementStates.Changing;
 
-        await updateElementsWithInterval(setLetters, [...letters], SHORT_DELAY_IN_MS, isComponentMounted);
+        await updateElementsWithInterval(setLetters, [...letters], DELAY_IN_MS, isComponentMounted);
         letters[leftIndex].state = ElementStates.Modified;
         letters[rightIndex].state = ElementStates.Modified;
 
@@ -58,7 +57,7 @@ export const StringComponent: React.FC = () => {
         letters[leftIndex].value = steps[currentStep][leftIndex];
         letters[rightIndex].value = steps[currentStep][rightIndex];
         
-        await updateElementsWithInterval(setLetters, [...letters], SHORT_DELAY_IN_MS, isComponentMounted);
+        await updateElementsWithInterval(setLetters, [...letters], DELAY_IN_MS, isComponentMounted);
 
         currentStep++;
       }

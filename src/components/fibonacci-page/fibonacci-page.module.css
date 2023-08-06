@@ -1,0 +1,33 @@
+.form {
+    display: flex;
+    gap: 12px;
+    max-width: 567px;
+    width: 100%;
+    margin: auto;
+}
+
+.circleWrap {
+    display: flex;
+    justify-content: center;
+    margin: 120px auto 0;
+    gap: 16px;
+    flex-wrap: wrap;
+    max-width: 944px;
+    width: 100%;
+}
+
+.circleSpanWrap {
+    width: 80px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+}
+
+.circleSpan {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #3D3D3D;
+    padding-top: 8px;
+}
