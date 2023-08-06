@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    gap: 12px;
+    max-width: 567px;
+    width: 100%;
+    margin: auto;
+}
+
+.circleWrap {
+    display: flex;
+    justify-content: center;
+    margin: 120px auto 0;
+    gap: 16px;
+    flex-wrap: wrap;
+}
