@@ -5,9 +5,9 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { useState } from "react";
-import { CircleElement } from "../../types/element-states";
+import { CircleElement } from "../../types/types";
 import { useEffect } from "react";
-import { ElementStates } from "../../types/element-states";
+import { ElementStates } from "../../types/types";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { updateElementsWithInterval } from "../../utils/utils";
 

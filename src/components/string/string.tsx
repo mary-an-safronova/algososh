@@ -5,10 +5,10 @@ import { useState } from "react";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
-import { ElementStates } from "../../types/element-states";
+import { ElementStates } from "../../types/types";
 import { DELAY_IN_MS } from "../../constants/delays";
 import { getReversingStringSteps, updateElementsWithInterval } from "../../utils/utils";
-import { CircleElement } from "../../types/element-states";
+import { CircleElement } from "../../types/types";
 import { useEffect } from "react";
 
 export const StringComponent: React.FC = () => {

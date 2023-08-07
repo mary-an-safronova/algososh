@@ -1,4 +1,4 @@
-import { CircleElement } from "../types/element-states"
+import { CircleElement } from "../types/types"
 
 export const swap = <T>(arr: T[], firstIndex: number, secondIndex: number): void => {
   const temp = arr[firstIndex];
