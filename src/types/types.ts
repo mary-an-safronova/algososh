@@ -9,6 +9,11 @@ export type CircleElement = {
     state: ElementStates;
 }
 
+export type ColumnElement = {
+    value: number;
+    state: ElementStates;
+}
+
 export enum Direction {
     Ascending = "ascending",
     Descending = "descending",
