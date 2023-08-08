@@ -4,18 +4,13 @@ import sortingPageStyle from "./sorting-page.module.css";
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { Button } from "../ui/button/button";
 import { Column } from "../ui/column/column";
-import { Direction } from "../../types/types";
-import { ElementStates, SortingMethod } from "../../types/types";
+import { ElementStates, SortingMethod, ColumnElement, Direction } from "../../types/types";
 import { useEffect } from "react";
-import { swap } from "../../utils/utils";
-import { updateColumnElementsWithInterval } from "../../utils/utils";
+import { swap, updateColumnElementsWithInterval } from "../../utils/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
-import { ColumnElement } from "../../types/types";
-import { sleep } from "../../utils/utils";
 
 export const SortingPage: React.FC = () => {
   const [sortingMethod, setSortingMethod] = useState<SortingMethod>(SortingMethod.Selection);
-  // const [sortingDirection, setSortingDirection] = useState<Direction>(Direction.Ascending);
   const [columnArray, setColumnArray] = useState<ColumnElement[]>([]);
   const [isComponentMounted, setIsMounted] = useState(false);
   const [inProgressAsc, setInProgressAsc] = useState(false);
@@ -28,10 +23,12 @@ export const SortingPage: React.FC = () => {
     };
   }, []);
 
+  // Генерация рандомного массива при загрузке страницы
   useEffect(() => {
     setColumnArray(createRandomArr());
   }, []);
 
+  // Функция генерации нового массива
   const createRandomArr = () => {
     const min = 0;
     const max = 100;
@@ -47,6 +44,7 @@ export const SortingPage: React.FC = () => {
     return arr;
   };
 
+  // Функция метода сортировки выбором
   const selectionSort = async (arr: ColumnElement[], direction: Direction) => {
     direction === Direction.Ascending ? setInProgressAsc(true) : setInProgressDesc(true);
 
@@ -59,10 +57,7 @@ export const SortingPage: React.FC = () => {
         setColumnArray([...arr]);
         await updateColumnElementsWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
 
-        if (
-          (direction === Direction.Ascending && arr[j].value < arr[minInd].value) ||
-          (direction === Direction.Descending && arr[j].value > arr[minInd].value)
-        ) {
+        if ((direction === Direction.Ascending && arr[j].value < arr[minInd].value) || (direction === Direction.Descending && arr[j].value > arr[minInd].value)) {
           minInd = j;
           arr[j].state = ElementStates.Changing;
           arr[minInd].state = i === minInd ? ElementStates.Changing : ElementStates.Default;
@@ -75,23 +70,65 @@ export const SortingPage: React.FC = () => {
       swap(arr, minInd, i);
       arr[minInd].state = ElementStates.Default;
       arr[i].state = ElementStates.Modified;
-      
       setColumnArray([...arr]);
     }
 
     direction === Direction.Ascending ? setInProgressAsc(false) : setInProgressDesc(false);
   };
 
-  const handleAscending = () => {
-    const newArray = [...columnArray];
-    selectionSort(newArray, Direction.Ascending);
+  // Функция метода сортировки пузырьком
+  const bubbleSort = async (arr: ColumnElement[], direction: Direction) => {
+    direction === Direction.Ascending ? setInProgressAsc(true) : setInProgressDesc(true);
+
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr.length - i - 1; j++) {
+        arr[j].state = ElementStates.Changing;
+
+        if (arr[j + 1]) arr[j + 1].state = ElementStates.Changing;
+        setColumnArray([...arr]);
+        await updateColumnElementsWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
+
+        if ((direction === Direction.Ascending && arr[j].value > arr[j + 1]?.value) || (direction === Direction.Descending && arr[j].value < arr[j + 1]?.value)) {
+          swap(arr, j + 1, j);
+        }
+
+        arr[j].state = ElementStates.Default;
+        if (arr[j + 1]) arr[j + 1].state = ElementStates.Default;
+        setColumnArray([...arr]);
+      }
+
+      arr[arr.length - i - 1].state = ElementStates.Modified;
+      setColumnArray([...arr]);
+    }
+
+    direction === Direction.Ascending ? setInProgressAsc(false) : setInProgressDesc(false);
+  } 
+
+  // Обработка клика на кнопку "По возрастанию"
+  const handleAscending = async () => {
+    if (sortingMethod === SortingMethod.Selection) {
+      const newArray = [...columnArray];
+      await selectionSort(newArray, Direction.Ascending);
+    }
+    if (sortingMethod === SortingMethod.Bubble) {
+      const newArray = [...columnArray];
+      await bubbleSort(newArray, Direction.Ascending);
+    }
   }
 
-  const handleDescending = () => {
-    const newArray = [...columnArray];
-    selectionSort(newArray, Direction.Descending);
+  // Обработка клика на кнопку "По убыванию"
+  const handleDescending = async () => {
+    if (sortingMethod === SortingMethod.Selection) {
+      const newArray = [...columnArray];
+      await selectionSort(newArray, Direction.Descending);
+    }
+    if (sortingMethod === SortingMethod.Bubble) {
+      const newArray = [...columnArray];
+      await bubbleSort(newArray, Direction.Descending);
+    }
   }
 
+  // Генерация нового массива по клику на кнопку "Новый массив"
   const handleCreatingNewArr = () => {
     setColumnArray(createRandomArr());
   }
@@ -105,12 +142,14 @@ export const SortingPage: React.FC = () => {
             value="selection" 
             checked={sortingMethod === SortingMethod.Selection} 
             onChange={() => setSortingMethod(SortingMethod.Selection)} 
+            disabled={inProgressAsc || inProgressDesc}
           />
           <RadioInput 
             label="Пузырёк" 
             value="bubble" 
             checked={sortingMethod === SortingMethod.Bubble} 
             onChange={() => setSortingMethod(SortingMethod.Bubble)} 
+            disabled={inProgressAsc || inProgressDesc}
           />
         </div>
 
