@@ -1,0 +1,32 @@
+.wrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 829px;
+    width: 100%;
+    margin: auto;
+}
+
+.inputButtonsWrap {
+    max-width: 630px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.addDeleteButtonsWrap {
+    max-width: 241px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.circleWrap {
+    display: flex;
+    justify-content: center;
+    margin: 120px auto 0;
+    gap: 16px;
+    flex-wrap: wrap;
+}

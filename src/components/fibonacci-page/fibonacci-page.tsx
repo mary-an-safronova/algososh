@@ -103,13 +103,12 @@ export const FibonacciPage: React.FC = () => {
 
       <ul className={fibonacciPageStyle.circleWrap}>
         {letters && letters.map((letter, index) => (
-          <div className={fibonacciPageStyle.circleSpanWrap} key={index}>
-            <Circle
-              state={letter?.state}
-              letter={letter?.value.toString()}
-            />
-            <span className={fibonacciPageStyle.circleSpan}>{index}</span>
-          </div>
+          <Circle
+            state={letter?.state}
+            letter={letter?.value.toString()}
+            index={index}
+            key={index}
+          />
         ))}
       </ul>
 

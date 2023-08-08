@@ -54,7 +54,6 @@ export const SortingPage: React.FC = () => {
 
       for (let j = i + 1; j < arr.length; j++) {
         arr[j].state = ElementStates.Changing;
-        setColumnArray([...arr]);
         await updateColumnElementsWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
 
         if ((direction === Direction.Ascending && arr[j].value < arr[minInd].value) || (direction === Direction.Descending && arr[j].value > arr[minInd].value)) {
@@ -64,15 +63,11 @@ export const SortingPage: React.FC = () => {
         }
 
         if (j !== minInd) arr[j].state = ElementStates.Default;
-        setColumnArray([...arr]);
       }
-
       swap(arr, minInd, i);
       arr[minInd].state = ElementStates.Default;
       arr[i].state = ElementStates.Modified;
-      setColumnArray([...arr]);
     }
-
     direction === Direction.Ascending ? setInProgressAsc(false) : setInProgressDesc(false);
   };
 
@@ -85,7 +80,6 @@ export const SortingPage: React.FC = () => {
         arr[j].state = ElementStates.Changing;
 
         if (arr[j + 1]) arr[j + 1].state = ElementStates.Changing;
-        setColumnArray([...arr]);
         await updateColumnElementsWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
 
         if ((direction === Direction.Ascending && arr[j].value > arr[j + 1]?.value) || (direction === Direction.Descending && arr[j].value < arr[j + 1]?.value)) {
@@ -94,13 +88,9 @@ export const SortingPage: React.FC = () => {
 
         arr[j].state = ElementStates.Default;
         if (arr[j + 1]) arr[j + 1].state = ElementStates.Default;
-        setColumnArray([...arr]);
       }
-
       arr[arr.length - i - 1].state = ElementStates.Modified;
-      setColumnArray([...arr]);
     }
-
     direction === Direction.Ascending ? setInProgressAsc(false) : setInProgressDesc(false);
   } 
 

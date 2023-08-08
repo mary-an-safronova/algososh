@@ -80,6 +80,7 @@ export const StringComponent: React.FC = () => {
         <Input 
           maxLength={11} 
           isLimitText={true} 
+          limitTexteEnd="ов"
           value={inputString} 
           onChange={handleInputChange} />
         <Button 
