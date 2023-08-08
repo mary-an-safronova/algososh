@@ -31,6 +31,7 @@ export const FibonacciPage: React.FC = () => {
     }
   };
 
+  // Функция нахождения числа из последовательности Фибоначчи с помощью мемоизации
   const fib = (n: number, memo: Record<number, number> = {}): number => {
     if (n in memo) {
       return memo[n];
@@ -42,6 +43,7 @@ export const FibonacciPage: React.FC = () => {
     return memo[n];
   };
 
+  // Генерация массива с числами Фибоначчи
   const generateFibonacci = async () => {
     setInProgress(true);
 
@@ -72,6 +74,7 @@ export const FibonacciPage: React.FC = () => {
     setInProgress(false);
   }
 
+  // Функция-обработка кнопки submit
   const handleStringFormSubmit = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
     setLetters([]);

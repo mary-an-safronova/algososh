@@ -29,6 +29,7 @@ export const StringComponent: React.FC = () => {
     setInputString(newInputString);
   };  
 
+  // Функция разворота строки
   const reversed = async () => {
     setInProgress(true);
     const letters: CircleElement[] = [];
@@ -65,6 +66,7 @@ export const StringComponent: React.FC = () => {
     setInProgress(false);
   }
 
+  // Функция-обработка кнопки submit
   const handleStringFormSubmit = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
 
