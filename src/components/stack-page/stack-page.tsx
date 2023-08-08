@@ -33,14 +33,17 @@ export const StackPage: React.FC = () => {
   const handleStackAdd = async () => {
     setInProgressAdd(true);
 
-    stack.push({ value: inputString, state: ElementStates.Changing });
-    setStackLetters([...stack.getElements()])
+    if (stack.getSize() <= 6) {
+      stack.push({ value: inputString, state: ElementStates.Changing });
+      setStackLetters([...stack.getElements()])
 
-    await sleep(SHORT_DELAY_IN_MS)
-    const lastElement = stack.peak();
-    if (lastElement) lastElement.state = ElementStates.Default;
+      await sleep(SHORT_DELAY_IN_MS)
+      const lastElement = stack.peak();
+      if (lastElement) lastElement.state = ElementStates.Default;
 
-    setInputString('');
+      setInputString('');
+    }
+    
     setInProgressAdd(false);
   }
 
@@ -83,7 +86,7 @@ export const StackPage: React.FC = () => {
               onClick={handleStackAdd} 
               type="button"
               isLoader={inProgressAdd} 
-              disabled={!inputString || inProgressDelete || inProgressClear} 
+              disabled={!inputString || inProgressDelete || inProgressClear || stack.getSize() > 6} 
             />
             <Button 
               text="Удалить" 

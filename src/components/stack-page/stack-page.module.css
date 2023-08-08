@@ -28,5 +28,6 @@
     justify-content: center;
     margin: 120px auto 0;
     gap: 16px;
+    row-gap: 80px;
     flex-wrap: wrap;
 }
