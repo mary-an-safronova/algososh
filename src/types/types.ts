@@ -9,6 +9,16 @@ export type CircleElement = {
     state: ElementStates;
 }
 
+export type QueueCircleElement = CircleElement & {
+    head: boolean;
+    tail: boolean;
+}
+
+export enum Position {
+    head = "head",
+    tail = "tail",
+}
+
 export type ColumnElement = {
     value: number;
     state: ElementStates;

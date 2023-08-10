@@ -30,9 +30,9 @@ export const sleep = async (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const updateElementsWithInterval = async (
-  setState: (elements: (CircleElement | null)[]) => void,
-  elements: (CircleElement | null)[],
+export const updateElementsWithInterval = async <T>(
+  setState: (elements: (T | null)[]) => void,
+  elements: (T | null)[],
   delay: number,
   isComponentMounted: boolean,
 ) => {
