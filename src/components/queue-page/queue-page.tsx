@@ -122,7 +122,6 @@ export const QueuePage: React.FC = () => {
         
           <div className={queuePageStyle.addDeleteButtonsWrap}>
             <Button 
-              id="add-btn"
               text="Добавить" 
               onClick={handleAdd} 
               type="button"

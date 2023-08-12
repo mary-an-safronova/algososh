@@ -1,0 +1,71 @@
+.mainWrap {
+    max-width: 952px;
+    width: 100%;
+    height: 158px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.wrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+}
+
+.input {
+    max-width: 204px;
+    width: 100%;
+}
+
+.btn {
+    max-width: 362px;
+    width: 100%;
+}
+
+.miniBtn {
+    max-width: 175px;
+    width: 175px;
+}
+
+.circlesWrap {
+    display: flex;
+    justify-content: center;
+    margin: 60px auto 0;
+    gap: 16px;
+    row-gap: 80px;
+    flex-wrap: wrap;
+}
+
+.circleWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 260px;
+    justify-content: space-between;
+    position: relative;
+    padding-right: 100px;
+}
+
+.topCircle {
+    position: absolute;
+    top: 0;
+}
+
+.centerCircle {
+    position: absolute;
+    top: 65px;
+}
+
+.bottomCircle {
+    position: absolute;
+    top: 185px;
+}
+
+.arrowIcon {
+    position: absolute;
+    top: 36%;
+    left: 45%;
+}

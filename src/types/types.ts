@@ -10,9 +10,15 @@ export type CircleElement = {
 }
 
 export type QueueCircleElement = CircleElement & {
-    head: boolean;
-    tail: boolean;
+    head?: boolean;
+    tail?: boolean;
 }
+
+export type ListCircleElement = QueueCircleElement & {
+    arrow?: boolean;
+    positionToChange?: boolean;
+    valueToChange?: string | number;
+};
 
 export enum Position {
     head = "head",
@@ -32,4 +38,10 @@ export enum Direction {
 export enum SortingMethod {
     Selection = "Выбор",
     Bubble = "Пузырёк",
+}
+
+export enum Colors {
+    Default = "#0032ff",
+    Changing = "#d252e1",
+    Modified = "#7fe051",
 }

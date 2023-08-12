@@ -6,7 +6,7 @@ import { Button } from "../ui/button/button";
 import { Column } from "../ui/column/column";
 import { ElementStates, SortingMethod, ColumnElement, Direction } from "../../types/types";
 import { useEffect } from "react";
-import { swap, updateColumnElementsWithInterval } from "../../utils/utils";
+import { swap, updateWithInterval } from "../../utils/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const SortingPage: React.FC = () => {
@@ -54,7 +54,7 @@ export const SortingPage: React.FC = () => {
 
       for (let j = i + 1; j < arr.length; j++) {
         arr[j].state = ElementStates.Changing;
-        await updateColumnElementsWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
+        await updateWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
 
         if ((direction === Direction.Ascending && arr[j].value < arr[minInd].value) || (direction === Direction.Descending && arr[j].value > arr[minInd].value)) {
           minInd = j;
@@ -80,7 +80,7 @@ export const SortingPage: React.FC = () => {
         arr[j].state = ElementStates.Changing;
 
         if (arr[j + 1]) arr[j + 1].state = ElementStates.Changing;
-        await updateColumnElementsWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
+        await updateWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
 
         if ((direction === Direction.Ascending && arr[j].value > arr[j + 1]?.value) || (direction === Direction.Descending && arr[j].value < arr[j + 1]?.value)) {
           swap(arr, j + 1, j);

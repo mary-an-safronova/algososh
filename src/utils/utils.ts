@@ -1,5 +1,3 @@
-import { CircleElement, ColumnElement } from "../types/types"
-
 export const swap = <T>(arr: T[], firstIndex: number, secondIndex: number): void => {
   const temp = arr[firstIndex];
   arr[firstIndex] = arr[secondIndex];
@@ -42,9 +40,9 @@ export const updateElementsWithInterval = async <T>(
   }
 };
 
-export const updateColumnElementsWithInterval = async (
-  setState: (elements: ColumnElement[]) => void,
-  elements: ColumnElement[],
+export const updateWithInterval = async <T>(
+  setState: (elements: T[]) => void,
+  elements: T[],
   delay: number,
   isComponentMounted: boolean,
 ) => {
