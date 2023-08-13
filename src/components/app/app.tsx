@@ -1,6 +1,6 @@
 import React from "react";
 import appStyle from './app.module.css';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import { FibonacciPage } from "../fibonacci-page/fibonacci-page";
 import { ListPage } from "../list-page/list-page";
 import { MainPage } from "../main-page/main-page";
@@ -12,7 +12,7 @@ import { StackPage } from "../stack-page/stack-page";
 function App() {
   return (
     <div className={appStyle.app}>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           <Route path="/" exact>
             <MainPage />
@@ -36,7 +36,7 @@ function App() {
             <ListPage />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
