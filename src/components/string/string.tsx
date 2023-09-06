@@ -7,7 +7,8 @@ import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/types";
 import { DELAY_IN_MS } from "../../constants/delays";
-import { getReversingStringSteps, updateElementsWithInterval } from "../../utils/utils";
+import { updateElementsWithInterval } from "../../utils/utils";
+import { getReversingStringSteps } from "./utils";
 import { CircleElement } from "../../types/types";
 import { useEffect } from "react";
 
@@ -37,6 +38,7 @@ export const StringComponent: React.FC = () => {
       letters.push({ value: element, state: ElementStates.Default });
     });
     const steps = getReversingStringSteps(inputString)
+    console.log(getReversingStringSteps(inputString))
     let currentStep = 0;
     while (currentStep < steps.length) {
       if (steps) {
