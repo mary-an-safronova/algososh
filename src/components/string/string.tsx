@@ -38,7 +38,6 @@ export const StringComponent: React.FC = () => {
       letters.push({ value: element, state: ElementStates.Default });
     });
     const steps = getReversingStringSteps(inputString)
-    console.log(getReversingStringSteps(inputString))
     let currentStep = 0;
     while (currentStep < steps.length) {
       if (steps) {
