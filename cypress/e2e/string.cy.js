@@ -1,6 +1,5 @@
 import { DELAY_IN_MS } from '../../src/constants/delays';
 import { inputString, circleTextEl, color } from '../support/constants/constants';
-import { swap } from '../../src/utils/utils';
 
 describe('string works correctly', () => {
     beforeEach('should visible the "String" page', () => {
@@ -15,7 +14,9 @@ describe('string works correctly', () => {
     it('should be a correct display of the string reversal, taking into account animation and styles', () => {
         const reverseLetters = (str, first, last) => {
             let arr = str.split('');
-            swap(arr, first - 1, last - 1)
+            const temp = arr[first - 1];
+            arr[first - 1] = arr[last - 1];
+            arr[last - 1] = temp;
             return arr.join('');
         }
 
