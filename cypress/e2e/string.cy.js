@@ -1,5 +1,6 @@
 import { DELAY_IN_MS } from '../../src/constants/delays';
 import { inputString, circleTextEl, color } from '../support/constants/constants';
+import { swap } from '../../src/utils/utils';
 
 describe('string works correctly', () => {
     beforeEach('should visible the "String" page', () => {
@@ -14,10 +15,7 @@ describe('string works correctly', () => {
     it('should be a correct display of the string reversal, taking into account animation and styles', () => {
         const reverseLetters = (str, first, last) => {
             let arr = str.split('');
-            const firstLetter = arr[first - 1];
-            const lastLetter = arr[last - 1];
-            arr.splice(first-1, 1, lastLetter);
-            arr.splice(last-1, 1, firstLetter);
+            swap(arr, first - 1, last - 1)
             return arr.join('');
         }
 
@@ -27,13 +25,12 @@ describe('string works correctly', () => {
 
         cy.get('input').type(inputString);
         cy.get('button[type="submit"]').click();
-
         cy.get(circleTextEl).should('have.length', inputString.length);
-
-        cy.wait(DELAY_IN_MS).then(() => {}).get(circleTextEl).parent().each(($circle, index) => {
-            if (index === 0 || index === 5) {
+                    
+        cy.get(circleTextEl).parent().each(($circle, index) => {
+            if (index === 0 || index === inputString.length-1) {
                 cy.wrap($circle).should('have.css', 'border-color', `${color.modified}`).and('have.text', oneStepReverseString[index]);
-            } else if (index === 1 || index === 4) {
+            } else if (index === 1 || index === inputString.length-2) {
                 cy.wrap($circle).should('have.css', 'border-color', `${color.changing}`).and('have.text', oneStepReverseString[index]);
             } else {
                 cy.wrap($circle).should('have.css', 'border-color', `${color.default}`).and('have.text', oneStepReverseString[index]);
@@ -41,7 +38,8 @@ describe('string works correctly', () => {
         });
 
         cy.wait(DELAY_IN_MS).then(() => {}).get(circleTextEl).parent().each(($circle, index) => {
-            if (index === 1 || index === 4 || index === 0 || index === 5) {
+            if (index === 1 || index === inputString.length-2 
+                || index === 0 || index === inputString.length-1) {
                 cy.wrap($circle).should('have.css', 'border-color', `${color.modified}`).and('have.text', twoStepReverseString[index]);
             } else {
                 cy.wrap($circle).should('have.css', 'border-color', `${color.changing}`).and('have.text', twoStepReverseString[index]);
