@@ -38,7 +38,8 @@ export const Circle: React.FC<CircleProps> = ({
           styles[state]
         }`}
       >
-        <p
+        <p 
+          data-testid='circle-text'
           className={`text text_type_circle text_color_input ${styles.letter}`}
         >
           {letter}
