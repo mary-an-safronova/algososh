@@ -1,5 +1,6 @@
 import { DELAY_IN_MS } from '../../src/constants/delays';
-import { inputString, circleTextEl, color } from '../support/constants/constants';
+import { circleTextEl, color } from '../support/constants/constants';
+import { reverseLetters, getRandomText } from '../support/utils/utils';
 
 describe('string works correctly', () => {
     beforeEach('should visible the "String" page', () => {
@@ -12,14 +13,7 @@ describe('string works correctly', () => {
     })
     
     it('should be a correct display of the string reversal, taking into account animation and styles', () => {
-        const reverseLetters = (str, first, last) => {
-            let arr = str.split('');
-            const temp = arr[first - 1];
-            arr[first - 1] = arr[last - 1];
-            arr[last - 1] = temp;
-            return arr.join('');
-        }
-
+        const inputString = getRandomText(6);
         const oneStepReverseString = reverseLetters(inputString, 1, inputString.length);
         const twoStepReverseString = reverseLetters(oneStepReverseString, 2, inputString.length-1);
         const threeStepReverseString = reverseLetters(twoStepReverseString, 3, inputString.length-2);

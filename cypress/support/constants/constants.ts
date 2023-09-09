@@ -1,5 +1,5 @@
-export const inputString = 'qwerty';
 export const circleTextEl = 'p[data-testid=circle-text]';
+export const circleHead = 'div[data-testid=circle-head]';
 
 export const color = {
     default: 'rgb(0, 50, 255)',
