@@ -84,7 +84,7 @@ describe('stack works correctly', () => {
         cy.get('p').contains('Очистить').parent().should('be.disabled');
     });
 
-    it('should be a correct display of the stack when the elements is cleaned', () => {
+    it('should be a correct display of the stack when the elements are cleaned', () => {
         let inputText = getRandomText(4);
 
         for (let i = 0; i <= 6; i++) {
