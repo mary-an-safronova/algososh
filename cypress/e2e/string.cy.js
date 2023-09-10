@@ -1,6 +1,6 @@
 import { DELAY_IN_MS } from '../../src/constants/delays';
 import { circleTextEl, color } from '../support/constants/constants';
-import { reverseLetters, getRandomText } from '../support/utils/utils';
+import { getRandomText } from '../support/utils/utils';
 
 describe('string works correctly', () => {
     beforeEach('should visible the "String" page', () => {
@@ -11,38 +11,31 @@ describe('string works correctly', () => {
         cy.get('input').should('have.value', '');
         cy.get('button[type="submit"]').should('be.disabled');
     })
-    
+
     it('should be a correct display of the string reversal, taking into account animation and styles', () => {
-        const inputString = getRandomText(6);
-        const oneStepReverseString = reverseLetters(inputString, 1, inputString.length);
-        const twoStepReverseString = reverseLetters(oneStepReverseString, 2, inputString.length-1);
-        const threeStepReverseString = reverseLetters(twoStepReverseString, 3, inputString.length-2);
-
-        cy.get('input').type(inputString);
-        cy.get('button[type="submit"]').click();
-        cy.get(circleTextEl).should('have.length', inputString.length);
-                    
-        cy.get(circleTextEl).parent().each(($circle, index) => {
-            if (index === 0 || index === inputString.length-1) {
-                cy.wrap($circle).should('have.css', 'border-color', `${color.modified}`).and('have.text', oneStepReverseString[index]);
-            } else if (index === 1 || index === inputString.length-2) {
-                cy.wrap($circle).should('have.css', 'border-color', `${color.changing}`).and('have.text', oneStepReverseString[index]);
-            } else {
-                cy.wrap($circle).should('have.css', 'border-color', `${color.default}`).and('have.text', oneStepReverseString[index]);
-            }
-        });
-
-        cy.wait(DELAY_IN_MS).then(() => {}).get(circleTextEl).parent().each(($circle, index) => {
-            if (index === 1 || index === inputString.length-2 
-                || index === 0 || index === inputString.length-1) {
-                cy.wrap($circle).should('have.css', 'border-color', `${color.modified}`).and('have.text', twoStepReverseString[index]);
-            } else {
-                cy.wrap($circle).should('have.css', 'border-color', `${color.changing}`).and('have.text', twoStepReverseString[index]);
-            }
-        });
-
-        cy.wait(DELAY_IN_MS).then(() => {}).get(circleTextEl).parent().each(($circle, index) => {
-            cy.wrap($circle).should('have.css', 'border-color', `${color.modified}`).and('have.text', threeStepReverseString[index]);
-        });
+        const inputString = getRandomText(6); // генерация рандомного текста
+        const steps = [1, 2, 3]; // массив этапов разворота строки
+      
+        cy.get('input').type(inputString); // помещаем рандомный текст в инпут
+        cy.get('button[type="submit"]').click(); // нажимаем кнопку "Развернуть"
+      
+        cy.get(circleTextEl).should('have.length', inputString.length); // длина массива компонентов circle
+      
+        for (let i = 0; i < steps.length; i++) { // проходим по этапам разворота строки
+            const forwardIndex = steps[i] - 1; // индекс первого элемента разворота 
+            const reverseIndex = inputString.length - (steps[i]); // индекс последнего элемента разворота
+        
+            cy.get(circleTextEl).eq(forwardIndex).parent().should('have.css', 'border-color', color.changing) // имеет цвет изменения
+                .and('have.text', inputString[forwardIndex]); // и первоначальный текст
+            cy.get(circleTextEl).eq(reverseIndex).parent().should('have.css', 'border-color', color.changing) // имеет цвет изменения
+                .and('have.text', inputString[reverseIndex]); // и первоначальный текст
+        
+            cy.wait(DELAY_IN_MS);
+        
+            cy.get(circleTextEl).eq(forwardIndex).parent().should('have.css', 'border-color', color.modified) // имеет цвет модифицированного компонента
+                .and('have.text', inputString[reverseIndex]); // и измененный текст
+            cy.get(circleTextEl).eq(reverseIndex).parent().should('have.css', 'border-color', color.modified) // имеет цвет модифицированного компонента
+                .and('have.text', inputString[forwardIndex]); // и измененный текст
+        }
     });
 })

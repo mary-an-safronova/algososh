@@ -1,12 +1,4 @@
-export const reverseLetters = (str, first, last) => {
-    let arr = str.split('');
-    const temp = arr[first - 1];
-    arr[first - 1] = arr[last - 1];
-    arr[last - 1] = temp;
-    return arr.join('');
-}
-
-export const getRandomText = (length) => {
+export const getRandomText = (length) => { // функция генерации рандомного текста в инпуте
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
