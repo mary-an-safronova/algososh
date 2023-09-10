@@ -8,7 +8,7 @@ import { Circle } from "../ui/circle/circle";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
 import { Position, ElementStates, ListCircleElement, Colors } from "../../types/types"; 
 import { LinkedList } from "./list";
-import { sleep, updateWithInterval } from "../../utils/utils";
+import { updateWithInterval } from "../../utils/utils";
 
 export const ListPage: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
@@ -202,6 +202,7 @@ export const ListPage: React.FC = () => {
       <div className={listPageStyle.mainWrap}>
         <div className={listPageStyle.wrap}>
           <Input 
+            data-testid='list-text-input'
             maxLength={4} 
             isLimitText={true} 
             limitTexteEnd="а"
@@ -245,6 +246,7 @@ export const ListPage: React.FC = () => {
         </div>
         <div className={listPageStyle.wrap}>
           <Input 
+              data-testid='list-index-input'
               maxLength={1} 
               min={0}
               max={list.toArray().length - 1}
