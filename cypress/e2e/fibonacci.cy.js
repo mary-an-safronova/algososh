@@ -15,18 +15,18 @@ describe('fibonacci works correctly', () => {
         const inputNumber = 7;
         const arr = [];
 
-        cy.get('input[type="number"]').type(inputNumber); 
-        cy.get('button[type="submit"]').click(); 
+        cy.get('input[type="number"]').type(inputNumber); // число в инпуте
+        cy.get('button[type="submit"]').click(); // нажимается кнопку "Рассчитать"
 
-        cy.get(circleTextEl).parent().should('have.length', inputNumber + 1);
+        cy.get(circleTextEl).parent().should('have.length', inputNumber + 1); // длина массива компонентов circle
     
         cy.get(circleTextEl).parent().each(($circle, index) => { 
             if (index <= 1) {
                 arr.push(1);
-                cy.wait(SHORT_DELAY_IN_MS).then(() => {}).wrap($circle).should('have.text', '1');
+                cy.wait(SHORT_DELAY_IN_MS).then(() => {}).wrap($circle).should('have.text', '1'); // отображаются единицы
             } else {
                 arr.push(arr[index -2] + arr[index - 1]);
-                cy.wait(SHORT_DELAY_IN_MS).then(() => {}).wrap($circle).should('have.text', arr[index]);
+                cy.wait(SHORT_DELAY_IN_MS).then(() => {}).wrap($circle).should('have.text', arr[index]); // отображается сумма значений двух предыдущих элементов массива
             }
         }); 
     })
