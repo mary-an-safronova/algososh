@@ -18,15 +18,19 @@ describe('list works correctly', () => {
     });
 
     it('should if the input is empty, then the "delete from head" button is disabled', () => {
-        cy.get('p').contains('Удалить из head').parent().should('not.be.disabled').click().click().click(); // удаляем из списка все элементы, кроме одного
+        cy.get('p').contains('Удалить из head').as('deleteFromHead')
+
+        cy.get('@deleteFromHead').parent().should('not.be.disabled').click().click().click(); // удаляем из списка все элементы, кроме одного
         cy.get(circleTextEl).should('have.length', 1);
-        cy.get('p').contains('Удалить из head').parent().should('be.disabled');
+        cy.get('@deleteFromHead').parent().should('be.disabled');
     });
 
     it('should if the input is empty, then the "delete from tail" button is disabled', () => {
-        cy.get('p').contains('Удалить из tail').parent().should('not.be.disabled').click().click().click(); // удаляем из списка все элементы, кроме одного
+        cy.get('p').contains('Удалить из tail').as('deleteFromTail')
+
+        cy.get('@deleteFromTail').parent().should('not.be.disabled').click().click().click(); // удаляем из списка все элементы, кроме одного
         cy.get(circleTextEl).should('have.length', 1);
-        cy.get('p').contains('Удалить из tail').parent().should('be.disabled');
+        cy.get('@deleteFromTail').parent().should('be.disabled');
     });
 
     it('should if the input is empty, then the "add by index" button is disabled', () => {
@@ -36,21 +40,23 @@ describe('list works correctly', () => {
     });
 
     it('should if the input is empty, then the "delete by index" button is disabled', () => {
+        cy.get('p').contains('Удалить по индексу').as('deleteByIndexBtn');
+
         cy.get(listIndexInput).should('have.value', ''); // инпут индекса
-        cy.get('p').contains('Удалить по индексу').parent().should('be.disabled');
+        cy.get('@deleteByIndexBtn').parent().should('be.disabled');
 
         cy.get(listIndexInput).type(3);
-        cy.get('p').contains('Удалить по индексу').parent().should('not.be.disabled').click(); // удаляем по индексу 3
+        cy.get('@deleteByIndexBtn').parent().should('not.be.disabled').click(); // удаляем по индексу 3
 
         cy.get(listIndexInput).type(2);
-        cy.get('p').contains('Удалить по индексу').parent().should('not.be.disabled').click(); // удаляем по индексу 2
+        cy.get('@deleteByIndexBtn').parent().should('not.be.disabled').click(); // удаляем по индексу 2
 
         cy.get(listIndexInput).type(1);
-        cy.get('p').contains('Удалить по индексу').parent().should('not.be.disabled').click(); // удаляем по индексу 1
+        cy.get('@deleteByIndexBtn').parent().should('not.be.disabled').click(); // удаляем по индексу 1
 
         cy.get(circleTextEl).should('have.length', 1); // остается один компонент circle
         cy.get(listIndexInput).type(0); // вводим данные инпут индекса
-        cy.get('p').contains('Удалить по индексу').parent().should('be.disabled'); // последний компонент circle удалить нельзя
+        cy.get('@deleteByIndexBtn').parent().should('be.disabled'); // последний компонент circle удалить нельзя
     });
 
     it('should check the correctness of rendering the default list', () => {

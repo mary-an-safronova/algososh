@@ -1,5 +1,5 @@
 import { DELAY_IN_MS } from '../../src/constants/delays';
-import { circleTextEl, color } from '../support/constants/constants';
+import { circleTextEl, color, submitButton, input } from '../support/constants/constants';
 import { getRandomText } from '../support/utils/utils';
 
 describe('string works correctly', () => {
@@ -8,16 +8,16 @@ describe('string works correctly', () => {
     })
 
     it('should if the input is empty, then the add button is disabled', () => {
-        cy.get('input').should('have.value', '');
-        cy.get('button[type="submit"]').should('be.disabled');
+        cy.get(input).should('have.value', '');
+        cy.get(submitButton).should('be.disabled');
     })
 
     it('should be a correct display of the string reversal, taking into account animation and styles', () => {
         const inputString = getRandomText(6); // генерация рандомного текста
         const steps = [1, 2, 3]; // массив этапов разворота строки
       
-        cy.get('input').type(inputString); // помещаем рандомный текст в инпут
-        cy.get('button[type="submit"]').click(); // нажимаем кнопку "Развернуть"
+        cy.get(input).type(inputString); // помещаем рандомный текст в инпут
+        cy.get(submitButton).click(); // нажимаем кнопку "Развернуть"
       
         cy.get(circleTextEl).should('have.length', inputString.length); // длина массива компонентов circle
       

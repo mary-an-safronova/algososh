@@ -1,4 +1,4 @@
-import { circleTextEl } from '../support/constants/constants';
+import { circleTextEl,submitButton, input } from '../support/constants/constants';
 import { SHORT_DELAY_IN_MS } from '../../src/constants/delays';
 
 describe('fibonacci works correctly', () => {
@@ -7,16 +7,17 @@ describe('fibonacci works correctly', () => {
     })
 
     it('should if the input is empty, then the add button is disabled', () => {
-        cy.get('input').should('have.value', '');
-        cy.get('button[type="submit"]').should('be.disabled');
+        cy.get(input).should('have.value', '');
+        cy.get(submitButton).should('be.disabled');
     })
 
     it('should be a correct display of the generation of fibonacci numbers', () => {
+        cy.get('input[type="number"]').as('inputNubmer')
         const inputNumber = 7;
         const arr = [];
 
-        cy.get('input[type="number"]').type(inputNumber); // число в инпуте
-        cy.get('button[type="submit"]').click(); // нажимается кнопку "Рассчитать"
+        cy.get('@inputNubmer').type(inputNumber); // число в инпуте
+        cy.get(submitButton).click(); // нажимается кнопку "Рассчитать"
 
         cy.get(circleTextEl).parent().should('have.length', inputNumber + 1); // длина массива компонентов circle
     
