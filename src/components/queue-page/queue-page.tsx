@@ -142,7 +142,7 @@ export const QueuePage: React.FC = () => {
             type="button"
             onClick={handleClearAll} 
             isLoader={inProgressClear} 
-            disabled={inProgressDelete || inProgressAdd}
+            disabled={inProgressDelete || inProgressAdd || queue.length === 0}
           />
       </div>
       <ul className={queuePageStyle.circleWrap}>

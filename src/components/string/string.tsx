@@ -7,7 +7,8 @@ import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/types";
 import { DELAY_IN_MS } from "../../constants/delays";
-import { getReversingStringSteps, updateElementsWithInterval } from "../../utils/utils";
+import { updateElementsWithInterval } from "../../utils/utils";
+import { getReversingStringSteps } from "./utils";
 import { CircleElement } from "../../types/types";
 import { useEffect } from "react";
 

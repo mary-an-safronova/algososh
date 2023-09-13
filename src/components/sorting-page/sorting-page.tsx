@@ -4,9 +4,9 @@ import sortingPageStyle from "./sorting-page.module.css";
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { Button } from "../ui/button/button";
 import { Column } from "../ui/column/column";
-import { ElementStates, SortingMethod, ColumnElement, Direction } from "../../types/types";
+import { SortingMethod, ColumnElement, Direction } from "../../types/types";
 import { useEffect } from "react";
-import { swap, updateWithInterval } from "../../utils/utils";
+import { createRandomArr, selectionSortFn, bubbleSortFn } from "./utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const SortingPage: React.FC = () => {
@@ -28,93 +28,35 @@ export const SortingPage: React.FC = () => {
     setColumnArray(createRandomArr());
   }, []);
 
-  // Функция генерации нового массива
-  const createRandomArr = () => {
-    const min = 0;
-    const max = 100;
-    const minLen = 3;
-    const maxLen = 17;
-    const length = Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
-    const arr = [];
-
-    for (let i = 0; i < length; i++) {
-      let num = Math.floor(Math.random() * (max - min + 1));
-      arr.push({ value: num, state: ElementStates.Default })
-    }
-    return arr;
-  };
-
   // Функция метода сортировки выбором
-  const selectionSort = async (arr: ColumnElement[], direction: Direction) => {
-    direction === Direction.Ascending ? setInProgressAsc(true) : setInProgressDesc(true);
-
-    for (let i = 0; i < arr.length; i++) {
-      let minInd = i;
-      arr[minInd].state = ElementStates.Changing
-
-      for (let j = i + 1; j < arr.length; j++) {
-        arr[j].state = ElementStates.Changing;
-        await updateWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
-
-        if ((direction === Direction.Ascending && arr[j].value < arr[minInd].value) || (direction === Direction.Descending && arr[j].value > arr[minInd].value)) {
-          minInd = j;
-          arr[j].state = ElementStates.Changing;
-          arr[minInd].state = i === minInd ? ElementStates.Changing : ElementStates.Default;
-        }
-
-        if (j !== minInd) arr[j].state = ElementStates.Default;
-      }
-      swap(arr, minInd, i);
-      arr[minInd].state = ElementStates.Default;
-      arr[i].state = ElementStates.Modified;
-    }
-    direction === Direction.Ascending ? setInProgressAsc(false) : setInProgressDesc(false);
+  const selectionSort = (direction: Direction) => {
+    const newArray = [...columnArray];
+    selectionSortFn(newArray, direction, setColumnArray, isComponentMounted, setInProgressAsc, setInProgressDesc, SHORT_DELAY_IN_MS);
   };
 
   // Функция метода сортировки пузырьком
-  const bubbleSort = async (arr: ColumnElement[], direction: Direction) => {
-    direction === Direction.Ascending ? setInProgressAsc(true) : setInProgressDesc(true);
-
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr.length - i - 1; j++) {
-        arr[j].state = ElementStates.Changing;
-
-        if (arr[j + 1]) arr[j + 1].state = ElementStates.Changing;
-        await updateWithInterval(setColumnArray, arr, SHORT_DELAY_IN_MS, isComponentMounted);
-
-        if ((direction === Direction.Ascending && arr[j].value > arr[j + 1]?.value) || (direction === Direction.Descending && arr[j].value < arr[j + 1]?.value)) {
-          swap(arr, j + 1, j);
-        }
-
-        arr[j].state = ElementStates.Default;
-        if (arr[j + 1]) arr[j + 1].state = ElementStates.Default;
-      }
-      arr[arr.length - i - 1].state = ElementStates.Modified;
-    }
-    direction === Direction.Ascending ? setInProgressAsc(false) : setInProgressDesc(false);
+  const bubbleSort = (direction: Direction) => {
+    const newArray = [...columnArray];
+    bubbleSortFn(newArray, direction, setColumnArray, isComponentMounted, setInProgressAsc, setInProgressDesc, SHORT_DELAY_IN_MS);
   } 
 
   // Обработка клика на кнопку "По возрастанию"
   const handleAscending = async () => {
     if (sortingMethod === SortingMethod.Selection) {
-      const newArray = [...columnArray];
-      await selectionSort(newArray, Direction.Ascending);
+      await selectionSort(Direction.Ascending);
     }
     if (sortingMethod === SortingMethod.Bubble) {
-      const newArray = [...columnArray];
-      await bubbleSort(newArray, Direction.Ascending);
+      await bubbleSort(Direction.Ascending);
     }
   }
 
   // Обработка клика на кнопку "По убыванию"
   const handleDescending = async () => {
     if (sortingMethod === SortingMethod.Selection) {
-      const newArray = [...columnArray];
-      await selectionSort(newArray, Direction.Descending);
+      await selectionSort(Direction.Descending);
     }
     if (sortingMethod === SortingMethod.Bubble) {
-      const newArray = [...columnArray];
-      await bubbleSort(newArray, Direction.Descending);
+      await bubbleSort(Direction.Descending);
     }
   }
 
